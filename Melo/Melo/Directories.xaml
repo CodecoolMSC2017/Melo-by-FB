@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Melo.Directories"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Melo"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1366">
+    <Grid>
+        <ListView Name ="directories" Height="400" VerticalAlignment="Top" Margin="0,39,0,0" >
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="400"/>
+                    <GridViewColumn Header="Path" DisplayMemberBinding="{Binding Path}" Width="800"/>
+                    <GridViewColumn Width="166">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="DeleteDirectory" CommandParameter="{Binding}" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Image Source="Pictures\delete.png" Width="20" Height="20"/>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add Directory" Height="40" Width="160" Margin="360,515,360,65" RenderTransformOrigin="0.769,0.66" Click="AddDirectory">
+            
+        </Button>
+        
+    </Grid>
+
+    
+</UserControl>

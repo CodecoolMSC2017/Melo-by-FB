@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melo", "Melo\Melo.csproj", "{F656C60B-5B83-4D68-A3E3-8E94BCA044D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11039A7B-72FB-4517-BE18-298558D10247}"
+	ProjectSection(SolutionItems) = preProject
+		init.sql = init.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F656C60B-5B83-4D68-A3E3-8E94BCA044D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F656C60B-5B83-4D68-A3E3-8E94BCA044D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F656C60B-5B83-4D68-A3E3-8E94BCA044D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F656C60B-5B83-4D68-A3E3-8E94BCA044D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65DBE317-F1A0-4F68-9C0C-6D721CF3BC13}
+	EndGlobalSection
+EndGlobal
