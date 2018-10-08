@@ -17,5 +17,6 @@ namespace Melo.Service.Interface
         void DeleteById(int id);
         void UpdateMusic(Music music);
         void Combine(string[] mp3Files, string mp3OuputFile, int dirId);
+        void TrimAudio(TimeSpan start, TimeSpan end, Music music);
     }
 }

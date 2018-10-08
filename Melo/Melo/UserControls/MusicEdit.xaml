@@ -133,8 +133,14 @@
             </StackPanel>
 
 
+            <Button x:Name="SplitButton"
+            Content="Split"
+            Style="{StaticResource MyRoundButtonStyle}"
+            Width="50"
+            Height="50"
+            Margin="4,30,0,0"
+            Click="SplitButton_Click"></Button>
 
-            
 
         </StackPanel>
         <StackPanel Width="150" Margin="550,-250,0,0" Height="100">

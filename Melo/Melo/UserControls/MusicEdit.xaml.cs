@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Reflection;
+using System.IO;
 
 namespace Melo
 {
@@ -177,6 +178,13 @@ namespace Melo
                 musicService.Combine(mp3Paths, outputName, first.DirectoryId);
             }
 
+        }
+
+        private void SplitButton_Click(object sender, RoutedEventArgs e)
+        {
+            TimeSpan start = TimeSpan.FromSeconds(slider.LowerValue);
+            TimeSpan end = TimeSpan.FromSeconds(slider.UpperValue);
+            musicService.TrimAudio(start, end, selectedMusic);
         }
     }
 }
