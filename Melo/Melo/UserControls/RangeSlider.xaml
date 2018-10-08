@@ -24,7 +24,7 @@
                             <Thumb x:Name="Thumb">
                                 <Thumb.Template>
                                     <ControlTemplate TargetType="Thumb">
-                                        <Rectangle Fill="Red" 
+                                        <Rectangle Fill="#FF3A60AD" 
                                                    Stroke="Black"
                                                    StrokeThickness="1" 
                                                    Width="10"

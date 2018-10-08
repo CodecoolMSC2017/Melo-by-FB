@@ -137,6 +137,7 @@
     <Compile Include="ClientEntities\MusicCategory.cs" />
     <Compile Include="ClientEntities\PubNubHelper.cs" />
     <Compile Include="Constants\Extensions.cs" />
+    <Compile Include="Converters\PercentToTimeConverter.cs" />
     <Compile Include="Dao\Interface\IDirectoryDao.cs" />
     <Compile Include="Dao\Interface\IImageDao.cs" />
     <Compile Include="Dao\Interface\IMusicDao.cs" />
@@ -347,8 +348,6 @@
     <Resource Include="Pictures\CloseBtn.JPG" />
     <Resource Include="Pictures\iconMail.JPG" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

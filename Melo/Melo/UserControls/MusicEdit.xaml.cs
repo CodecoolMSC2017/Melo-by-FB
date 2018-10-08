@@ -38,12 +38,29 @@ namespace Melo
             selectedMusic = music;
             InitializeComponent();
             this.DataContext = selectedMusic;
+            InitComboBoxes();
+            StartTimerAndPlayer();
+        }
+
+        private void InitComboBoxes()
+        {
             firstMp3.ItemsSource = musicList;
             secondMp3.ItemsSource = musicList;
+            if(musicList.Count > 0)
+            {
+                firstMp3.SelectedIndex = 0;
+                secondMp3.SelectedIndex = 0;
+            }
+        }
+
+        private void StartTimerAndPlayer()
+        {
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+            mePlayer.Play();
+            mediaPlayerIsPlaying = true;
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -52,6 +69,7 @@ namespace Melo
             {
                 sliProgress.Minimum = 0;
                 sliProgress.Maximum = mePlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                slider.Maximum = mePlayer.NaturalDuration.TimeSpan.TotalSeconds;
                 sliProgress.Value = mePlayer.Position.TotalSeconds;
             }
         }
