@@ -33,8 +33,7 @@ namespace Melo
             myDirectories = new ObservableCollection<Directory>(directoryService.GetAll());
             InitializeComponent();
             this.directories.ItemsSource = myDirectories;
-            
-
+            CreateFileMonitors();
         }
 
         private void DeleteDirectory(object sender, RoutedEventArgs e)
@@ -48,6 +47,7 @@ namespace Melo
 
         private void AddDirectory(object sender, RoutedEventArgs e)
         {
+
             //Configure File dialog
             if (CommonFileDialog.IsPlatformSupported)
             {
@@ -67,10 +67,20 @@ namespace Melo
                     string name = splitted[splitted.Length - 1];
                     Directory dir = new Directory(name, path);
                     dir = directoryService.Add(dir);
+                    MainWindow.fileMonitors.Add(new SimpleFileInputMonitor(dir.Path));
                     SimpleFileSearcher fileSearcher = new SimpleFileSearcher(dir, new Extensions(), musicService, videoService, imageService);
                     myDirectories = new ObservableCollection<Directory>(directoryService.GetAll());
                     this.directories.ItemsSource = myDirectories;
                 }
+            }
+        }
+
+        private void CreateFileMonitors()
+        {
+            MainWindow.fileMonitors = new System.Collections.Generic.List<SimpleFileInputMonitor>();
+            foreach (Directory directory in myDirectories)
+            {
+                MainWindow.fileMonitors.Add(new SimpleFileInputMonitor(directory.Path));
             }
         }
     }

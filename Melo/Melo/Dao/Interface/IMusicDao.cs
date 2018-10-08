@@ -15,5 +15,6 @@ namespace Melo.Dao.Interface
         void DeleteMusicById(int id);
         List<Music> GetAllByAlbum(String album);
         List<Music> GetAllByArtist(String artist);
+        void UpdateMusic(Music music);
     }
 }

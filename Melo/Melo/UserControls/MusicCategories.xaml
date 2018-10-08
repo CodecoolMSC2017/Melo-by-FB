@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Melo.Videos"
+﻿<UserControl x:Class="Melo.MusicCategories"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,44 +6,49 @@
              xmlns:local="clr-namespace:Melo"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1366">
+
     <UserControl.CommandBindings>
         <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
         <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
         <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
     </UserControl.CommandBindings>
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ImageItem" DataType="{x:Type ListBoxItem}">
+            <Button Click="SelectAlbum" CommandParameter="{Binding}" MaxWidth="80"
+                   Margin="10" >
+                <Button.Template>
+                    <ControlTemplate>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Pictures/category_label.png" HorizontalAlignment="Center"/>
+                            <Label Margin="0,100,0,0" Content="{Binding Path=Name}" HorizontalAlignment="Center"></Label>
+                        </Grid>
+                        
+                        
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid>
-        <DockPanel Margin="5,39,0,0">
-            <ListView Name ="videoList" Height="700" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left">
-                <ListView.Resources>
-                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Left" />
-                    </Style>
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView >
-                        <GridViewColumn Width="60">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Click="Start_Play" CommandParameter="{Binding}" >
-                                        <Button.Template>
-                                            <ControlTemplate>
-                                                <Image Source="Pictures\start.png" Width="20" Height="20"/>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="300"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <DockPanel VerticalAlignment="Top" Height="550" Margin="0,61,0,0">
+            <ListBox Name="musicList"
+            ItemTemplate="{StaticResource ImageItem}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </DockPanel>
-        <DockPanel MouseWheel="DockPanel_MouseWheel" Margin="5,39,0,0" HorizontalAlignment="Right" Width="1060" Height="700" VerticalAlignment="Top">
-            <Grid HorizontalAlignment="Center" Width="1060">
+        <DockPanel MouseWheel="DockPanel_MouseWheel" Width="1366" Margin="0,650,0,0" Name="selectedDockPanel">
+            <Grid HorizontalAlignment="Center" Width="1366" Margin="0,0,0,200">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="97*" />
+                    <RowDefinition Height="104*"/>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ToolBar VerticalAlignment="Center">
@@ -59,13 +64,9 @@
                     </Button>
                     <Label Content="{Binding Path=Name}" Margin="280,0,0,0" VerticalAlignment="Center"></Label>
                 </ToolBar>
-                <Grid>
-                    
-                </Grid>
+                <MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Source="{Binding Path=FilePath}" HorizontalAlignment="Center" Margin="683,0" Grid.RowSpan="2"/>
 
-                <MediaElement Name="mePlayer" Grid.Row="1" LoadedBehavior="Manual" Source="{Binding Path=FilePath}" MaxWidth="1040" MaxHeight="620" HorizontalAlignment="Center"/>
-
-                <StatusBar Grid.Row="2">
+                <StatusBar Grid.Row="3">
                     <StatusBar.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Grid>
@@ -90,5 +91,4 @@
             </Grid>
         </DockPanel>
     </Grid>
-    
 </UserControl>

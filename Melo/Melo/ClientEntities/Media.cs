@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Melo.ClientEntities
 {
-    public class Media
+    public abstract class Media
     {
         public String FilePath { get; set; }
         public int Id { get; set; }

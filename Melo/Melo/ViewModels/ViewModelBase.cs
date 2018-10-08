@@ -20,6 +20,12 @@ namespace Melo.ViewModel
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public event PropertyChangedEventHandler PubnubPropertyChanged;
+        protected void PubnubOnPropertyChanged(string propertyName)
+        {
+            PubnubPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
 

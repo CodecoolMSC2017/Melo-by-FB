@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Windows;
+using Melo.ClientEntities;
 using System.Windows.Input;
 
 namespace Melo.ViewModel
 {
     public class MainWindowViewModel: ViewModelBase
     {
+        private PubNubHelper _pubNub = null;
         private ICommand _gotoDirectoriesCommand;
         private ICommand _gotoPicturesCommand;
         private ICommand _gotoMusicsCommand;
         private ICommand _gotoVideosCommand;
+
         private object _currentView;
         private object directories;
         private object musics;
         private object pictures;
         private object videos;
+        
 
 
         public MainWindowViewModel()
@@ -26,6 +27,11 @@ namespace Melo.ViewModel
             pictures = new Pictures();
             musics = new Musics();
             videos = new Videos();
+            if (_pubNub == null)
+                _pubNub = new PubNubHelper();
+
+            _pubNub.Init();
+            Listen();
 
             CurrentView = directories;
         }
@@ -106,6 +112,16 @@ namespace Melo.ViewModel
         private void GotoVideos()
         {
             CurrentView = new Videos();
+        }
+
+        public void Listen()
+        {
+            _pubNub.Listen();
+        }
+
+        public void PublishMessage()
+        {
+            _pubNub.Publish();
         }
     }
 }

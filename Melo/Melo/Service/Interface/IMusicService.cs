@@ -15,5 +15,7 @@ namespace Melo.Service.Interface
         List<Music> GetAllByAlbum(String album);
         List<Music> GetAllByArtist(String artist);
         void DeleteById(int id);
+        void UpdateMusic(Music music);
+        void Combine(string[] mp3Files, string mp3OuputFile, int dirId);
     }
 }

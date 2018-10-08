@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 using Melo.Service.Interface;
 using Melo.Service.Simple;
 using System.Data.SqlClient;
+using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
+using Melo.ViewModel;
 
 
 
@@ -26,10 +30,26 @@ namespace Melo
     public partial class MainWindow : Window
 
     {
+        public static List<SimpleFileInputMonitor> fileMonitors;
         public MainWindow()
         {
             InitializeComponent();
+            fileMonitors = new List<SimpleFileInputMonitor>();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
 
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if(SimpleFileInputMonitor.Raised > 0)
+            {
+                var viewModel = (MainWindowViewModel)DataContext;
+                viewModel.PublishMessage();
+                SimpleFileInputMonitor.Raised = 0;
+            }
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Melo.Musics"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Melo"
+             xmlns:vm="clr-namespace:Melo.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1366" >
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:AllMusicViewModel}">
+            <local:MusicList/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MusicAlbumsViewModel}">
+            <local:MusicCategories/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MusicArtistsViewModel}">
+            <local:MusicCategories/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <TabControl Margin="5,39,0,0" Height="500" VerticalAlignment="Top">
+            <TabItem Header="All Music" >
+                <TabItem.InputBindings>
+                    <MouseBinding Command="{Binding GoToAllMusicsCommand}" MouseAction="LeftClick" />
+                </TabItem.InputBindings>
+            </TabItem>
+            <TabItem Header="Musics by Album" Margin="109,0,-113,-2">
+                <TabItem.InputBindings>
+                    <MouseBinding Command="{Binding GoToAlbumsCommand}" MouseAction="LeftClick" />
+                </TabItem.InputBindings>
+            </TabItem>
+            <TabItem Header="Musics by Artist" Margin="-102,0,87,-2">
+                <TabItem.InputBindings>
+                    <MouseBinding Command="{Binding GoToArtistsCommand}" MouseAction="LeftClick" />
+                </TabItem.InputBindings>
+            </TabItem>
+        </TabControl>
+
+        <ContentControl Content="{Binding CurrentView}" />
+
+    </Grid>
+
+</UserControl>

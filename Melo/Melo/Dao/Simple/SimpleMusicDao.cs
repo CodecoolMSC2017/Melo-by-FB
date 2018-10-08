@@ -51,9 +51,10 @@ namespace Melo.Dao.Simple
                         while (reader.Read())
                         {
                             int newid = reader.GetInt32(0);
+                            int directoryId = reader.GetInt32(1);
                             String path = reader.GetString(2);
                             String name = reader.GetString(3);
-                            Music music = new Music(path, name, newid);
+                            Music music = new Music(path, name, newid, directoryId);
                             musics.Add(music);
 
                         }
@@ -82,9 +83,10 @@ namespace Melo.Dao.Simple
                         while (reader.Read())
                         {
                             int newid = reader.GetInt32(0);
+                            int directoryId = reader.GetInt32(1);
                             String path = reader.GetString(2);
                             String name = reader.GetString(3);
-                            Music music = new Music(path, name, newid);
+                            Music music = new Music(path, name, newid,directoryId);
                             musics.Add(music);
 
                         }
@@ -113,9 +115,10 @@ namespace Melo.Dao.Simple
                         while (reader.Read())
                         {
                             int newid = reader.GetInt32(0);
+                            int directoryId = reader.GetInt32(1);
                             String path = reader.GetString(2);
                             String name = reader.GetString(3);
-                            Music music = new Music(path, name, newid);
+                            Music music = new Music(path, name, newid,directoryId);
                             musics.Add(music);
 
                         }
@@ -144,9 +147,10 @@ namespace Melo.Dao.Simple
                         while (reader.Read())
                         {
                             int newid = reader.GetInt32(0);
+                            int directoryId = reader.GetInt32(1);
                             String path = reader.GetString(2);
                             String name = reader.GetString(3);
-                            music = new Music(path, name, newid);
+                            music = new Music(path, name, newid, directoryId);
 
                         }
                     }
@@ -166,12 +170,11 @@ namespace Melo.Dao.Simple
                 using (SqlConnection conn = ConnectionCreater.connect())
                 {
                     conn.Open();
-                    SqlCommand insertCommand = new SqlCommand("INSERT INTO musics (name, file_path, extension, comment, directory_id,artist,album,title) VALUES (name, file_path, extension, comment, directory_id, artist, album, title)", conn);
+                    SqlCommand insertCommand = new SqlCommand("INSERT INTO musics (name, file_path, extension,directory_id,artist,album,title) VALUES (@name, @file_path, @extension, @directory_id, @artist, @album, @title)", conn);
 
                     insertCommand.Parameters.Add(new SqlParameter("name", music.Name));
                     insertCommand.Parameters.Add(new SqlParameter("file_path", music.FilePath));
                     insertCommand.Parameters.Add(new SqlParameter("extension", music.Extension));
-                    insertCommand.Parameters.Add(new SqlParameter("comment", music.Comment));
                     insertCommand.Parameters.Add(new SqlParameter("artist", music.Artist));
                     insertCommand.Parameters.Add(new SqlParameter("album", music.Album));
                     insertCommand.Parameters.Add(new SqlParameter("title", music.Title));
@@ -184,6 +187,13 @@ namespace Melo.Dao.Simple
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public void UpdateMusic(Music music)
+        {
+            int dirId = GetMusicById(music.Id).DirectoryId;
+            DeleteMusicById(music.Id);
+            InsertMusic(music, dirId);
         }
     }
 }
