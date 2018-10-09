@@ -7,12 +7,14 @@ using System.Data.SqlClient;
 using Melo.Service.Interface;
 using Melo.ClientEntities;
 using Melo.Dao.Interface;
+using log4net;
 
 namespace Melo.Dao.Simple
 {
     class SimpleVideoDao : IVideoDao
     {
         private IConnectionCreater ConnectionCreater;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public SimpleVideoDao(IConnectionCreater connectionCreater)
         {
@@ -29,11 +31,13 @@ namespace Melo.Dao.Simple
                     SqlCommand command = new SqlCommand("Delete FROM videos WHERE id = @0", conn);
                     command.Parameters.Add(new SqlParameter("0", id));
                     command.ExecuteNonQuery();
+                    log.Info("Video with the id: " + id + " successfully deleted from the database");
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while deleting a video from the database", e);
             }
         }
 
@@ -63,6 +67,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all videos from the database", e);
             }
             return videos;
         }
@@ -93,6 +98,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting a video from the database", e);
             }
             return video;
         }
@@ -111,13 +117,15 @@ namespace Melo.Dao.Simple
                     insertCommand.Parameters.Add(new SqlParameter("extension", video.Extension));
                     insertCommand.Parameters.Add(new SqlParameter("directory_id", directoryId));
                     insertCommand.ExecuteNonQuery();
-                    
+                    log.Info("Video with the name: " + video.Name + " successfully added to the database");
+
 
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while adding a video to the database", e);
             }
         }
     }

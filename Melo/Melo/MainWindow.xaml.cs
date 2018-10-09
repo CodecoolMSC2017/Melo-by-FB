@@ -19,6 +19,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using Melo.ViewModel;
+using log4net;
+
 
 
 
@@ -31,14 +33,17 @@ namespace Melo
 
     {
         public static List<SimpleFileInputMonitor> fileMonitors;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public MainWindow()
         {
             InitializeComponent();
+            log4net.Config.XmlConfigurator.Configure();
             fileMonitors = new List<SimpleFileInputMonitor>();
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+            log.Info("Application started");
 
         }
 

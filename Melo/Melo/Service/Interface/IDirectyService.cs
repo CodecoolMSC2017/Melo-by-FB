@@ -7,7 +7,7 @@ using Melo.ClientEntities;
 
 namespace Melo.Service.Interface
 {
-    interface IDirectyService
+    public interface IDirectyService
     {
         Directory Add(Directory directory);
         Directory GetById(int id);

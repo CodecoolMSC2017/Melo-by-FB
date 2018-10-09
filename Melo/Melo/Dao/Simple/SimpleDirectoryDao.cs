@@ -7,13 +7,14 @@ using System.Data.SqlClient;
 using Melo.Service.Interface;
 using Melo.ClientEntities;
 using Melo.Dao.Interface;
+using log4net;
 
 namespace Melo.Dao.Simple
 {
     public class SimpleDirectoryDao: IDirectoryDao
     {
         private IConnectionCreater ConnectionCreater;
-
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public SimpleDirectoryDao(IConnectionCreater connectionCreater)
         {
             this.ConnectionCreater = connectionCreater;
@@ -31,11 +32,13 @@ namespace Melo.Dao.Simple
                     insertCommand.Parameters.Add(new SqlParameter("name", directory.Name));
                     insertCommand.Parameters.Add(new SqlParameter("directory_path", directory.Path));
                     insertCommand.ExecuteNonQuery();
+                    log.Info("Directory with the name: " + directory.Name + " successfully added to the database");
 
                 }
             } catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while adding a directory to the database", e);
             }
             return GetDirectoryByName(directory.Name);
 
@@ -68,6 +71,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting a directory from the database", e);
             }
             return directory;
         }
@@ -98,6 +102,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting a directory to the database", e);
             }
             return directory;
         }
@@ -112,11 +117,13 @@ namespace Melo.Dao.Simple
                     SqlCommand command = new SqlCommand("Delete FROM directories WHERE id = @0", conn);
                     command.Parameters.Add(new SqlParameter("0", id));
                     command.ExecuteNonQuery();
+                    log.Info("Directory with the id: " + id + " successfully deleted from the database");
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while deleting a directory from the database", e);
             }
         }
 
@@ -146,6 +153,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all directories from the database", e);
             }
             return directories;
 

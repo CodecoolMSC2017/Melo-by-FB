@@ -7,14 +7,16 @@ using System.Data.SqlClient;
 using Melo.Service.Interface;
 using Melo.ClientEntities;
 using Melo.Dao.Interface;
+using log4net;
 
 namespace Melo.Dao.Simple
 {
     class SimpleMusicDao: IMusicDao
     {
-            private IConnectionCreater ConnectionCreater;
+        private IConnectionCreater ConnectionCreater;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            public SimpleMusicDao(IConnectionCreater connectionCreater)
+        public SimpleMusicDao(IConnectionCreater connectionCreater)
             {
                 this.ConnectionCreater = connectionCreater;
             }
@@ -29,11 +31,13 @@ namespace Melo.Dao.Simple
                     SqlCommand command = new SqlCommand("Delete FROM musics WHERE id = @0", conn);
                     command.Parameters.Add(new SqlParameter("0", id));
                     command.ExecuteNonQuery();
+                    log.Info("Music with the id: " + id + " successfully deleted from the database");
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while deleting a music from the database", e);
             }
         }
 
@@ -63,7 +67,7 @@ namespace Melo.Dao.Simple
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all musics from the database", e);
             }
             return musics;
         }
@@ -96,6 +100,8 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all musics from the database", e);
+
             }
             return musics;
         }
@@ -128,6 +134,8 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all musics from the database", e);
+
             }
             return musics;
         }
@@ -159,6 +167,7 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting a music from the database", e);
             }
             return music;
         }
@@ -180,12 +189,14 @@ namespace Melo.Dao.Simple
                     insertCommand.Parameters.Add(new SqlParameter("title", music.Title));
                     insertCommand.Parameters.Add(new SqlParameter("directory_id", directoryId));
                     insertCommand.ExecuteNonQuery();
+                    log.Info("Music with the name: " + music.Name + " successfully added to the database");
 
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while adding a music to the database", e);
             }
         }
 

@@ -17,43 +17,62 @@ namespace Melo.ClientEntities
 
         public Music(String path, String name):base(path,name)
         {
-            TagLib.File tagFile = TagLib.File.Create(FilePath);
-            Artist = tagFile.Tag.FirstAlbumArtist;
-            Album = tagFile.Tag.Album;
-            Title = tagFile.Tag.Title;
-            if (Artist == null)
+            try
             {
-                Artist = "undefined";
-            }
-            Album = tagFile.Tag.Album;
-            if (Album == null)
+                TagLib.File tagFile = TagLib.File.Create(FilePath);
+                Artist = tagFile.Tag.FirstAlbumArtist;
+                Album = tagFile.Tag.Album;
+                Title = tagFile.Tag.Title;
+                Album = tagFile.Tag.Album;
+            } catch(TagLib.CorruptFileException e)
             {
-                Album = "undefined";
-            }
-            Title = tagFile.Tag.Title;
-            if (Title == null)
+                Console.WriteLine("An error occured while getting taglib informations");
+            } finally
             {
-                Title = "undefined";
+                if (Artist == null)
+                {
+                    Artist = "undefined";
+                }
+                if (Album == null)
+                {
+                    Album = "undefined";
+                }
+                if (Title == null)
+                {
+                    Title = "undefined";
+                }
             }
+
         }
 
         public Music(String path, String name, int id) : base(path, name, id)
         {
-            TagLib.File tagFile = TagLib.File.Create(FilePath);
-            Artist = tagFile.Tag.FirstAlbumArtist;
-            if(Artist == null)
+            try
             {
-                Artist = "undefined";
+                TagLib.File tagFile = TagLib.File.Create(FilePath);
+                Artist = tagFile.Tag.FirstAlbumArtist;
+                Album = tagFile.Tag.Album;
+                Title = tagFile.Tag.Title;
+                Album = tagFile.Tag.Album;
             }
-            Album = tagFile.Tag.Album;
-            if (Album == null)
+            catch (TagLib.CorruptFileException e)
             {
-                Album = "undefined";
+                Console.WriteLine("An error occured while getting taglib informations");
             }
-            Title = tagFile.Tag.Title;
-            if (Title == null)
+            finally
             {
-                Title = "undefined";
+                if (Artist == null)
+                {
+                    Artist = "undefined";
+                }
+                if (Album == null)
+                {
+                    Album = "undefined";
+                }
+                if (Title == null)
+                {
+                    Title = "undefined";
+                }
             }
 
         }
@@ -62,21 +81,32 @@ namespace Melo.ClientEntities
         public Music(String path, String name, int id, int directoryId) : base(path, name, id)
         {
             this.DirectoryId = directoryId;
-            TagLib.File tagFile = TagLib.File.Create(FilePath);
-            Artist = tagFile.Tag.FirstAlbumArtist;
-            if (Artist == null)
+            try
             {
-                Artist = "undefined";
+                TagLib.File tagFile = TagLib.File.Create(FilePath);
+                Artist = tagFile.Tag.FirstAlbumArtist;
+                Album = tagFile.Tag.Album;
+                Title = tagFile.Tag.Title;
+                Album = tagFile.Tag.Album;
             }
-            Album = tagFile.Tag.Album;
-            if (Album == null)
+            catch (TagLib.CorruptFileException e)
             {
-                Album = "undefined";
+                Console.WriteLine("An error occured while getting taglib informations");
             }
-            Title = tagFile.Tag.Title;
-            if (Title == null)
+            finally
             {
-                Title = "undefined";
+                if (Artist == null)
+                {
+                    Artist = "undefined";
+                }
+                if (Album == null)
+                {
+                    Album = "undefined";
+                }
+                if (Title == null)
+                {
+                    Title = "undefined";
+                }
             }
 
         }

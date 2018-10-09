@@ -9,12 +9,15 @@ using Melo.Service.Interface;
 using Melo.Dao.Interface;
 using Melo.Dao.Simple;
 using NAudio.Wave;
+using log4net;
 
 namespace Melo.Service.Simple
 {
     class SimpleMusicService : IMusicService
     {
         IMusicDao musicDao;
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public SimpleMusicService(IConnectionCreater connectionCreater)
         {
             musicDao = new SimpleMusicDao(connectionCreater);
@@ -84,6 +87,7 @@ namespace Melo.Service.Simple
             }
             FileInfo file = new FileInfo(mp3OuputFile);
             Music music = new Music(file.FullName, file.Name);
+            log.Info("Successfully comined audio with name: " + music.Name);
             Add(music, dirId);
         }
 
@@ -143,7 +147,8 @@ namespace Melo.Service.Simple
                 }
                 catch (InvalidOperationException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    log.Error("Error occured while convert wav to mp3", ex);
+                    
                 }
             }
         }
@@ -158,7 +163,7 @@ namespace Melo.Service.Simple
                 }
                 catch (IOException e)
                 {
-                    Console.WriteLine(e.Message);
+                    log.Error("Error occured while delete a file", e);
                 }
             }
         }
@@ -201,6 +206,7 @@ namespace Melo.Service.Simple
 
                 //Add new audio to database
                 FileInfo file = new FileInfo(outputName);
+                log.Info("Successfully trimmed audio file named: " + music.Name);
                 Add(new Music(file.FullName,file.Name), music.DirectoryId);
             }
             finally

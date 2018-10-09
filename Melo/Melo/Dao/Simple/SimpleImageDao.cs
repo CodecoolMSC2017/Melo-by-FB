@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Melo.Service.Interface;
 using Melo.ClientEntities;
 using Melo.Dao.Interface;
+using log4net;
 
 namespace Melo.Dao.Simple
 {
@@ -14,7 +15,7 @@ namespace Melo.Dao.Simple
     {
 
         private IConnectionCreater ConnectionCreater;
-
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public SimpleImageDao(IConnectionCreater connectionCreater)
         {
             this.ConnectionCreater = connectionCreater;
@@ -30,16 +31,18 @@ namespace Melo.Dao.Simple
                     SqlCommand command = new SqlCommand("Delete FROM pictures WHERE id = @0", conn);
                     command.Parameters.Add(new SqlParameter("0", id));
                     command.ExecuteNonQuery();
+                    log.Info("Image with the id: " + id + " successfully deleted from the database");
                 }
-            }
-            catch (SqlException e)
+            } catch(SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while deleting an image from the database", e);
             }
         }
 
         public List<Image> GetAll()
         {
+            
             List<Image> images = new List<Image>();
             try
             {
@@ -60,19 +63,19 @@ namespace Melo.Dao.Simple
                         }
                     }
                 }
-            }
-            catch (SqlException e)
+            } catch(SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting all images from the database", e);
             }
+            
             return images;
         }
 
         public Image GetImageById(int id)
         {
             Image image = null;
-            try
-            {
+            try { 
                 using (SqlConnection conn = ConnectionCreater.connect())
                 {
                     conn.Open();
@@ -94,14 +97,14 @@ namespace Melo.Dao.Simple
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while getting an image from the database", e);
             }
             return image;
         }
 
         public void InsertImage(Image image, int directoryId)
         {
-            try
-            {
+            try { 
                 using (SqlConnection conn = ConnectionCreater.connect())
                 {
                     conn.Open();
@@ -112,13 +115,16 @@ namespace Melo.Dao.Simple
                     insertCommand.Parameters.Add(new SqlParameter("extension", image.Extension));
                     insertCommand.Parameters.Add(new SqlParameter("directory_id", directoryId));
                     insertCommand.ExecuteNonQuery();
+                    log.Info("Image with the name: " + image.Name + " successfully added to the database");
 
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                log.Error("Sql exception occured while adding an image to the database", e);
             }
         }
+        }
     }
-}
+
